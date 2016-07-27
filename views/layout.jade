@@ -1,0 +1,16 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')    
+    body
+        h1
+            a(href='/main') nodejs practice page
+        
+        div
+            p
+                ul
+                    each content in contents 
+                        li
+                            a(href='/main/' + content.id)= content.title
+
+        block otherPage
