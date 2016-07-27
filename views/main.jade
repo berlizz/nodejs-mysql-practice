@@ -1,0 +1,43 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')    
+    body
+        h1
+            a(href='/main') nodejs practice page
+        
+        div
+            p
+                ul
+                    each content in contents 
+                        li
+                            a(href='/main/' + content.id)= content.title
+        
+        article
+            p
+                if content
+                    p
+                        h1= content.title
+                    p
+                        |author : 
+                        = content.author
+                    p 
+                        = content.description
+                    p
+                        = content.date
+                    
+                else
+                    h1 welcome
+
+        div
+            p
+                a(href='/add') add
+            
+            if content
+                p 
+                    a(href='/main/' + content.id + '/edit') edit
+                p
+                    a(href='/main/' + content.id + '/delete') delete
+                
+                
+
