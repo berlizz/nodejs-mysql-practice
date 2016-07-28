@@ -11,7 +11,7 @@ module.exports = function() {
                 console.log(err);
                 res.status(500);
             }
-            res.render('add', { contents: rows });
+            res.render('add', { contents: rows, user: req.user });
         });
     });
 
@@ -47,10 +47,10 @@ module.exports = function() {
                         console.log(err);
                         res.status(500).send("internal server error");
                     }
-                    res.render('main', { contents: rows, content: selectedId[0] });            
+                    res.render('main', { contents: rows, content: selectedId[0], user: req.user });            
                 });
             } else {
-                res.render('main', { contents: rows });
+                res.render('main', { contents: rows, user: req.user });
             }
         });
     });
@@ -69,7 +69,7 @@ module.exports = function() {
                     console.log(err);
                     res.status(500).send("internal server error");
                 }
-                res.render('edit', { contents: rows, content: selectedId[0] });
+                res.render('edit', { contents: rows, content: selectedId[0], user: req.user });
             });
         });
     });
@@ -105,7 +105,7 @@ module.exports = function() {
                     console.log(err);
                     res.status(500);
                 }
-                res.render('delete', { contents: rows, content: selectedId[0] });
+                res.render('delete', { contents: rows, content: selectedId[0], user: req.user });
             });
         });
     });
