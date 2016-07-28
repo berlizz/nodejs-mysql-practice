@@ -1,0 +1,14 @@
+//- extends ./layout.jade
+//- block otherPage
+
+doctype html
+head
+    html    
+        h1 login
+        form(action='/auth/login' method='post')
+            p ID : 
+                input(type='text' name='username' placeholder='ID')
+            p password : 
+                input(type='password' name='password' placeholder='password')
+            p
+                input(type='submit' value='login')

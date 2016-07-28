@@ -1,0 +1,13 @@
+doctype html
+head
+    html    
+        h1 sign up
+        form(action='/auth/signup' method='post')
+            p ID : 
+                input(type='text' name='userId' placeholder='ID')
+            p password : 
+                input(type='password' name='password' placeholder='password')
+            p display name : 
+                input(type='text' name='displayName' placeholder='display name')
+            p
+                input(type='submit' value='sign up')
