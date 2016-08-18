@@ -4,15 +4,31 @@ module.exports = function() {
     var conn = require('../config/mysql.js')();
     var sql;
 
+    // router.get('/add', function(req, res) {
+    //     sql = 'select * from contents order by id desc';
+    //     conn.query(sql, function(err, rows, fields) {
+    //         if(err) {
+    //             console.log(err);
+    //             res.status(500);
+    //         }
+    //         res.render('add', { contents: rows, user: req.user });
+    //     });
+    // });
+
     router.get('/add', function(req, res) {
-        sql = 'select * from contents order by id desc';
-        conn.query(sql, function(err, rows, fields) {
-            if(err) {
-                console.log(err);
-                res.status(500);
-            }
-            res.render('add', { contents: rows, user: req.user });
+        console.log(req.user);
+        if(req.user) {
+            sql = 'select * from contents order by id desc';
+            conn.query(sql, function(err, rows, fields) {
+                if(err) {
+                    console.log(err);
+                    res.status(500);
+                }
+                res.render('add', { contents: rows, user: req.user });
         });
+        } else {
+            res.render('login');
+        }
     });
 
     router.post('/add', function(req, res) {

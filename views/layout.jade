@@ -6,6 +6,9 @@ html
         ul
             if user
                 li
+                    |hello 
+                    = user.displayName 
+                    &nbsp;&nbsp;&nbsp;&nbsp;
                     a(href='/auth/logout') log out
             
             else
