@@ -4,17 +4,6 @@ module.exports = function() {
     var conn = require('../config/mysql.js')();
     var sql;
 
-    // router.get('/add', function(req, res) {
-    //     sql = 'select * from contents order by id desc';
-    //     conn.query(sql, function(err, rows, fields) {
-    //         if(err) {
-    //             console.log(err);
-    //             res.status(500);
-    //         }
-    //         res.render('add', { contents: rows, user: req.user });
-    //     });
-    // });
-
     router.get('/add', function(req, res) {
         console.log(req.user);
         if(req.user) {
@@ -27,7 +16,7 @@ module.exports = function() {
                 res.render('add', { contents: rows, user: req.user });
         });
         } else {
-            res.render('login');
+            res.send('<script>alert("please log in"); window.location("/auth/login")</script>');
         }
     });
 
@@ -35,7 +24,7 @@ module.exports = function() {
         var insert = {
             title: req.body.title,
             description: req.body.description,
-            author: req.body.author
+            author: req.user.displayName
         }
         sql = 'insert into contents set ?';
         conn.query(sql, insert, function(err, rows, fields) {
@@ -85,7 +74,16 @@ module.exports = function() {
                     console.log(err);
                     res.status(500).send("internal server error");
                 }
-                res.render('edit', { contents: rows, content: selectedId[0], user: req.user });
+                if(req.user) {
+                    if(req.user.displayName === selectedId[0].author) {
+                        res.render('edit', { contents: rows, content: selectedId[0], user: req.user });
+                    } else {
+                        res.send('<script>alert("error"); history.go(-1);</script>');
+                        
+                    }
+                } else {
+                    res.send('<script>alert("please log in"); window.location("/auth/login")</script>');
+                }
             });
         });
     });
@@ -94,7 +92,7 @@ module.exports = function() {
         var id = req.params.id;
         var update = {
             title: req.body.title,
-            author: req.body.author,
+            //author: req.user.displayName,
             description: req.body.description
         }
         sql = 'update contents set ? where id=?';
@@ -121,7 +119,15 @@ module.exports = function() {
                     console.log(err);
                     res.status(500);
                 }
-                res.render('delete', { contents: rows, content: selectedId[0], user: req.user });
+                if(req.user) {
+                    if(req.user.displayName === selectedId[0].author) {
+                        res.render('delete', { contents: rows, content: selectedId[0], user: req.user });
+                    } else {
+                        res.send('<script>alert("error"); history.go(-1);</script>');
+                    }
+                } else {
+                    res.send('<script>alert("please log in"); window.location("/auth/login")</script>');
+                }
             });
         });
     });

@@ -5,10 +5,13 @@ block otherPage
             h1 add
             form(action='/main/add' method='post')
                 p
+                    | title : 
                     input(type='text' name='title' placeholder='title')
                 p
-                    input(type='text' name='author' placeholder='author')
+                    | author : &nbsp;
+                    = user.displayName 
                 p
+                    | description : 
                     textarea(name='description' placeholder='description')
                 p
                     input(type='submit' value='작성')
